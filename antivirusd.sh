@@ -7,6 +7,7 @@ fi
 dir="$1"
 malicious_dir="$2"
 interval_secs="$3"
+whitelist="whitelist.txt"
 last="directory-info.last"
 new="directory-info.new"
 malicious_ext=".exe .bat .vbs .scr .ps1"
@@ -20,7 +21,9 @@ scan_files(){
 
 		filename=$(basename "$file")
 		malicious=false
-
+		if grep -Fxq "$filename" "whitelist" 2>/dev/null; then
+			continue
+		fi
 		for extension in $malicious_ext
 		do
 			if [[ "$filename" == *"$extension" ]]; then

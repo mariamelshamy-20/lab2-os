@@ -5,6 +5,7 @@ if [ $# -ne 2 ]; then
 fi
 dir="$1"
 malicious_dir="$2"
+whitelist="whitelist.txt"
 if [ -z "$(ls "$malicious_dir")" ]; then
 	echo "no malicious files to review"
 	exit 0
@@ -40,6 +41,9 @@ read option
 if [ "$option" -eq 1 ]; then
 	cp "$selected" "$dir/$filename"
 	rm "$selected"
+	if ! grep -Fxq "$filename" "$whitelist" 2>/dev/null; then
+	echo "$filename" >> "$whitelist"
+	fi
 	echo "restored $filename to $dir"
 elif [ "$option" -eq 2 ]; then
 	rm "$selected"
