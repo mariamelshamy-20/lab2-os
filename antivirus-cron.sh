@@ -17,6 +17,9 @@ for file in "$dir"/*
 
                 filename=$(basename "$file")
                 malicious=false
+                if grep -Fxq "$filename" "$whitelist" 2>/dev/null; then
+                        continue
+                fi
 
                 for extension in $malicious_ext
                 do

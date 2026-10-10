@@ -5,7 +5,8 @@ if [ $# -ne 2 ]; then
 fi
 dir="$1"
 malicious_dir="$2"
-whitelist="whitelist.txt"
+repo_dir="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+whitelist="$repo_dir/whitelist.txt"
 if [ -z "$(ls "$malicious_dir")" ]; then
 	echo "no malicious files to review"
 	exit 0
